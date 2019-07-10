@@ -1,0 +1,32 @@
+<div *ngIf="comment" class="comment">
+  <mat-card>
+    <div class="comment__header">
+      <img class="comment__avatar" src="{{comment.authorPhotoURL}}" alt="">
+      <div class="comment__header-body">
+        <p class="comment__name">{{comment.authorName}}</p>
+        <p class="comment__date">投稿日: {{comment.createdAt.toDate() | date:'yyyy年MM月dd HH:mm'}}</p>
+      </div>
+      <ng-container *ngIf="isOwner">
+        <button class="comment__menu" mat-icon-button [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openCommentForm()">
+            <mat-icon>edit</mat-icon>
+            <span>編集</span>
+          </button>
+          <button mat-menu-item (click)="deleteComment(comment.id)">
+            <mat-icon>delete</mat-icon>
+            <span>削除</span>
+          </button>
+        </mat-menu>
+      </ng-container>
+    </div>
+    <p class="comment__body">{{comment.body}}</p>
+    <div *ngIf="isEditMode">
+      <mat-divider></mat-divider>
+      <app-comment-edit-form class="editor" [comment]="comment"></app-comment-edit-form>
+    </div>
+  </mat-card>
+</div>

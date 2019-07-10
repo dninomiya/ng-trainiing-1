@@ -1,0 +1,9 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field class="form-item">
+    <mat-label>本文</mat-label>
+    <textarea formControlName="body" matInput autocomplete="off" required></textarea>
+    <mat-error *ngIf="body.errors?.required">本文は必須です</mat-error>
+    <mat-error *ngIf="body.errors?.maxlength">最大400文字です</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" [disabled]="form.invalid">編集</button>
+</form>

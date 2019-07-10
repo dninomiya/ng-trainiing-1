@@ -1,0 +1,11 @@
+<div class="container">
+  <h1>マイページ</h1>
+  <div *ngIf="myComments$ | async as myComments">
+    <div *ngIf="myComments.length; else blank">
+      <app-comment class="comment" *ngFor="let comment of myComments" [comment]="comment"></app-comment>
+    </div>
+    <ng-template #blank>
+      <p>コメントはありません</p>
+    </ng-template>
+  </div>
+</div>

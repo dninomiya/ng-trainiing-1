@@ -1,0 +1,21 @@
+<mat-toolbar color="primary" class="header">
+  <mat-toolbar-row>
+    <a routerLink="/">DemoChat</a>
+    <span class="spacer"></span>
+    <ng-container *ngIf="user$ | async as user">
+      <button mat-button routerLink="/">チャット</button>
+      <button mat-button routerLink="/mypage">マイページ</button>
+      <a class="avatar" [style.background-image]="'url(' + user.photoURL + ')'" [matMenuTriggerFor]="menu"></a>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="settings">
+          <mat-icon>settings</mat-icon>
+          <span>設定</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon class="mat-18">exit_to_app</mat-icon>
+          <span>ログアウト</span>
+        </button>
+      </mat-menu>
+    </ng-container>
+  </mat-toolbar-row>
+</mat-toolbar>
