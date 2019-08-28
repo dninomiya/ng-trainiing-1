@@ -1,9 +1,10 @@
 <div class="container">
   <app-comment-form class="form"></app-comment-form>
-  <div *ngIf="comments$ | async as comments; else loading">
+  <div *ngIf="comments$ | async as comments; else blank">
     <app-comment class="comment" *ngFor="let comment of comments" [comment]="comment"></app-comment>
   </div>
-  <ng-template #loading>
-    <mat-spinner class="loading" [diameter]="40"></mat-spinner>
+  <ng-template #blank>
+    <p>コメントはありません。</p>
   </ng-template>
+  <mat-spinner *ngIf="isLoading" class="loading" [diameter]="40"></mat-spinner>
 </div>

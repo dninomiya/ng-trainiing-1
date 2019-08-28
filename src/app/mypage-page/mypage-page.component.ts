@@ -3,6 +3,7 @@ import { CommentService } from '../services/comment.service';
 import { Observable } from 'rxjs';
 import { MyComment } from '../interfaces/my-comment';
 import { AuthService } from '../services/auth.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mypage-page',
@@ -19,8 +20,8 @@ export class MypagePageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.myComments$ = this.commentService.getMyComments(
-      this.authService.user.uid
+    this.myComments$ = this.authService.afAuth.user.pipe(
+      switchMap(user => this.commentService.getMyComments(user.uid))
     );
   }
 

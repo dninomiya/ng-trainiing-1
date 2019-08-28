@@ -13,10 +13,6 @@ export class AuthService {
     private router: Router
   ) { }
 
-  get user() {
-    return this.afAuth.auth.currentUser;
-  }
-
   login() {
     const googleAuthProvider = new auth.GoogleAuthProvider();
     googleAuthProvider.setCustomParameters({

@@ -20,19 +20,21 @@ export class CommentFormComponent implements OnInit {
     return this.form.get('body');
   }
 
-  user = this.authService.user;
+  user;
 
   constructor(
     private fb: FormBuilder,
     private commentService: CommentService,
     private snackBar: MatSnackBar,
     private authService: AuthService
-  ) {}
+  ) {
+    this.authService.afAuth.user.subscribe(user => this.user = user);
+  }
 
   ngOnInit() { }
 
   submit() {
-    if (this.form.valid) {
+    if (this.form.valid && this.user) {
       this.commentService
         .addComment({
           body: this.form.value.body,

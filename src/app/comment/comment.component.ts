@@ -3,6 +3,8 @@ import { MyComment } from '../interfaces/my-comment';
 import { CommentService } from '../services/comment.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../services/auth.service';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-comment',
@@ -14,7 +16,7 @@ export class CommentComponent implements OnInit {
   @Input() comment: MyComment;
 
   isEditMode: boolean;
-  isOwner: boolean;
+  isOwner$: Observable<boolean>;
 
   constructor(
     private commentService: CommentService,
@@ -23,7 +25,9 @@ export class CommentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isOwner = this.authService.user.uid === this.comment.authorId;
+    this.isOwner$ = this.authService.afAuth.user.pipe(
+      map(user => user.uid === this.comment.authorId)
+    );
   }
 
   deleteComment(id: string) {
